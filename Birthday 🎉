@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday — Maiysha Fatima 🎉 (Khann)</title>
+  <meta name="description" content="A playful birthday page made by Khann for Maiysha Fatima — quiz, confetti, music, and wishes." />
+  <style>
+    :root{--bg:#fff0f6;--pink:#ff5c9e;--gold:#ffd166;--card:#ffffff;--muted:#6b6b7a}
+    *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg, rgba(255,92,158,0.06) 0%, rgba(255,209,230,0.03) 60%),var(--bg);color:#111;display:flex;align-items:center;justify-content:center;padding:18px}
+    .wrap{width:100%;max-width:980px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(15,10,20,0.12)}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:22px;padding:30px}
+    @media (max-width:880px){.hero{grid-template-columns:1fr;padding:18px}.right{order:-1}}
+    h1{font-size:36px;margin:0;color:var(--pink);letter-spacing:-0.6px}
+    .subtitle{color:var(--muted);margin-top:6px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.4));border-radius:14px;padding:16px}
+
+    /* intro overlay */
+    .intro{position:fixed;inset:0;background:linear-gradient(180deg, rgba(15,8,20,0.85), rgba(10,8,12,0.9));display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:120;color:#fff;padding:22px}
+    .intro h2{font-size:34px;margin:0;color:var(--pink);text-shadow:0 6px 30px rgba(255,92,158,0.18)}
+    .intro p{color:#f7dfe8;margin-top:10px}
+    .enter{margin-top:20px;padding:12px 18px;border-radius:10px;background:linear-gradient(90deg,var(--pink),var(--gold));border:none;color:#111;font-weight:700;cursor:pointer}
+
+    /* portrait */
+    .portrait{width:100%;height:360px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#ffeef6,#fff5f9);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -30px 60px rgba(255,92,158,0.04)}
+    .portrait img{width:100%;height:100%;object-fit:cover}
+
+    /* quiz */
+    .quiz{margin-top:10px}
+    .q{display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.7),rgba(255,255,255,0.4));margin-bottom:10px}
+    .q h3{margin:0;font-size:16px}
+    .opts{display:flex;gap:10px;margin-top:6px}
+    .btn{flex:1;padding:10px;border-radius:10px;border:2px solid rgba(0,0,0,0.06);background:transparent;font-weight:700;cursor:pointer}
+    .btn.yes{background:linear-gradient(90deg,var(--pink),#ff85b6);color:#fff;border:none}
+    .btn.no{background:linear-gradient(90deg,#fff8d6,var(--gold));color:#111;border:none}
+
+    /* footer/wishes */
+    .wishes{margin-top:14px}
+    .wish-input{display:flex;gap:8px}
+    .wish-input input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)}
+    .wish-input button{padding:10px 12px;border-radius:10px;background:var(--pink);color:#fff;border:none;cursor:pointer}
+
+    .result{padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,92,158,0.08), rgba(255,209,102,0.06));margin-top:12px}
+
+    /* celebration area */
+    .celebrate{display:flex;gap:12px;align-items:center;margin-top:12px}
+    .primary{padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--pink),var(--gold));border:none;color:#111;font-weight:800;cursor:pointer}
+    .secondary{padding:10px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent;cursor:pointer}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    footer{padding:12px 18px;text-align:center;color:var(--muted);font-size:13px;background:linear-gradient(180deg,transparent,rgba(15,8,20,0.01));border-top:1px solid rgba(0,0,0,0.02)}
+
+    /* confetti canvas */
+    canvas.confetti{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:110}
+  </style>
+</head>
+<body>
+  <canvas class="confetti" id="confettiCanvas"></canvas>
+
+  <div class="intro" id="intro">
+    <h2>Welcome to Khann's GitHub 🎉</h2>
+    <p>Opening... a special surprise for Maiysha Fatima</p>
+    <button class="enter" id="enterBtn">Let's Start</button>
+  </div>
+
+  <div class="wrap" role="main" aria-labelledby="pageTitle">
+    <div class="hero">
+      <div>
+        <h1 id="pageTitle">Happy Birthday — Maiysha Fatima</h1>
+        <div class="subtitle">Made with love by <strong>Khann</strong> — Play the quiz and send your wish!</div>
+
+        <div class="card" style="margin-top:16px">
+          <div class="portrait" aria-hidden>
+            <img id="portraitImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect fill='%23fff0f6' width='100%' height='100%'/><text x='50%' y='50%' fill='%23ff5c9e' font-size='24' font-family='Arial' text-anchor='middle'>Replace with Maiysha's photo</text></svg>" alt="Portrait placeholder" />
+          </div>
+
+          <div class="quiz" id="quiz">
+            <!-- questions inserted by JS -->
+          </div>
+
+          <div class="result" id="result" style="display:none"></div>
+
+          <div class="wishes">
+            <div class="wish-input">
+              <input id="wishText" placeholder="Write a short wish for Maiysha..." />
+              <button id="sendWish">Send</button>
+            </div>
+            <div id="wishList" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"></div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+            <div class="muted">Share this link after you upload to GitHub Pages</div>
+            <div class="celebrate">
+              <button class="primary" id="celebrateBtn">🎉 Celebrate</button>
+              <button class="secondary" id="playMusic">▶ Play Music</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="card" style="padding:14px;text-align:center">
+          <div style="font-weight:800;color:var(--pink);font-size:20px">Birthday Quiz</div>
+          <div class="muted" style="margin-top:8px">12 funny Yes / No questions — see who knows Maiysha best!</div>
+
+          <div style="margin-top:14px;display:flex;gap:8px;justify-content:center">
+            <button class="secondary" id="restartBtn">Restart Quiz</button>
+            <button class="secondary" id="showAnswersBtn">Show Answers</button>
+          </div>
+
+          <div style="margin-top:18px;font-size:13px;color:var(--muted)">Tip: Replace the portrait above with Maiysha's photo by editing the HTML (portraitImg src).</div>
+        </div>
+      </div>
+    </div>
+    <footer>Made by Khann • Upload this file to a GitHub repo and enable Pages to share the live link.</footer>
+  </div>
+
+  <audio id="bgAudio" loop preload="none" src=""></audio>
+
+  <script>
+    // ------------------ CONFIG ------------------
+    // If you want to pre-fill a portrait image url, set portraitSrc to a public image link
+    const portraitSrc = '';
+    const audioSrc = ''; // paste an mp3 link if you have one
+    // ---------------------------------------------
+
+    if(portraitSrc) document.getElementById('portraitImg').src = portraitSrc;
+    if(audioSrc) document.getElementById('bgAudio').src = audioSrc;
+
+    // Intro behavior
+    const intro = document.getElementById('intro');
+    document.getElementById('enterBtn').addEventListener('click', ()=>{intro.style.display='none';runConfetti(40)});
+
+    // QUIZ QUESTIONS (12 funny / roast-style)
+    const questions = [
+      "Kya tum cake ka last piece chhupane ki aadat rakhte ho?",
+      "Kya tum birthday par alarm set karke khud ko surprise karte ho?",
+      "Kya tum frontal camera se 100 selfies leke 5 hi post karte ho?",
+      "Kya tum party me sabse zyada dance karne wala ho?",
+      "Kya tum gifts open karte hue jaldi karte ho?",
+      "Kya tum age batate huay thoda kam bol dete ho?",
+      "Kya tum fridge me cake rakhne ke baad hi shaadi ka plan tay karte ho?",
+      "Kya tum birthday pe mostly phone pe memes bhejte ho?",
+      "Kya tum cake se pehle 'I won't eat' bolte ho phir pura cake kha lete ho?",
+      "Kya tum party me DJ ko sirf requests bhejte ho?",
+      "Kya tum birthday selfies ke liye lighting check karte ho 10 bar?",
+      "Kya tum cake pe candle bujhane se pehle wish 3 dafa change karte ho?"
+    ];
+
+    const quizEl = document.getElementById('quiz');
+    let answers = new Array(questions.length).fill(null);
+
+    function renderQuiz(){
+      quizEl.innerHTML = '';
+      questions.forEach((q, i)=>{
+        const qWrap = document.createElement('div'); qWrap.className='q';
+        const h = document.createElement('h3'); h.textContent = (i+1)+'. '+q; qWrap.appendChild(h);
+        const opts = document.createElement('div'); opts.className='opts';
+        const yes = document.createElement('button'); yes.className='btn yes'; yes.textContent='YES';
+        const no = document.createElement('button'); no.className='btn no'; no.textContent='NO';
+        yes.addEventListener('click', ()=>{answers[i]=true; updateUI();});
+        no.addEventListener('click', ()=>{answers[i]=false; updateUI();});
+        opts.appendChild(yes); opts.appendChild(no); qWrap.appendChild(opts);
+        quizEl.appendChild(qWrap);
+      });
+      updateUI();
+    }
+
+    function updateUI(){
+      // highlight selected
+      const qs = quizEl.querySelectorAll('.q');
+      qs.forEach((el, i)=>{
+        const yes = el.querySelector('.yes'), no = el.querySelector('.no');
+        if(answers[i]===true){ yes.style.boxShadow='0 8px 18px rgba(255,92,158,0.18)'; no.style.boxShadow='none'; }
+        else if(answers[i]===false){ no.style.boxShadow='0 8px 18px rgba(255,209,102,0.18)'; yes.style.boxShadow='none'; }
+        else { yes.style.boxShadow=no.style.boxShadow='none'; }
+      });
+
+      // calculate score (count of yes answers)
+      const yesCount = answers.filter(v=>v===true).length;
+      const answered = answers.filter(v=>v!==null).length;
+      const result = document.getElementById('result');
+      if(answered===questions.length){
+        // final message
+        let msg = '';
+        if(yesCount>=9) msg = `Cake Master detected! 🍰 You scored ${yesCount}/${questions.length}. Maiysha, this one will steal the cake.`;
+        else if(yesCount>=5) msg = `Party Pro vibes — ${yesCount}/${questions.length}. Not bad!`;
+        else msg = `Low-key mister/ma'am calm — ${yesCount}/${questions.length}. Share the cake peacefully.`;
+        result.style.display='block'; result.innerHTML = '<strong>Quiz Result</strong><div style="margin-top:8px">'+msg+'</div>';
+      } else {
+        result.style.display='block'; result.innerHTML = '<strong>Quiz Progress</strong><div style="margin-top:8px">Answered '+answered+' of '+questions.length+'. Complete to see your result.</div>';
+      }
+    }
+
+    renderQuiz();
+
+    // restart & show answers (fun behavior)
+    document.getElementById('restartBtn').addEventListener('click', ()=>{answers = new Array(questions.length).fill(null); renderQuiz(); window.scrollTo({top:0,behavior:'smooth'})});
+    document.getElementById('showAnswersBtn').addEventListener('click', ()=>{
+      // playful preset: randomly pick yes/no for fun
+      answers = answers.map(()=>Math.random()>0.5);
+      updateUI(); window.scrollTo({top:0,behavior:'smooth'});
+    });
+
+    // wishes
+    const wishList = document.getElementById('wishList');
+    document.getElementById('sendWish').addEventListener('click', addWish);
+    document.getElementById('wishText').addEventListener('keydown', e=>{if(e.key==='Enter') addWish()});
+    function addWish(){const v = document.getElementById('wishText').value.trim(); if(!v) return; const chip = document.createElement('div'); chip.style.padding='8px 10px'; chip.style.borderRadius='999px'; chip.style.background='linear-gradient(90deg, rgba(255,92,158,0.12), rgba(255,209,102,0.08))'; chip.style.fontSize='13px'; chip.textContent=v; wishList.prepend(chip); document.getElementById('wishText').value='';}
+
+    // celebrate + confetti
+    const confettiCanvas = document.getElementById('confettiCanvas'); const ctx = confettiCanvas.getContext('2d'); let pieces=[]; function resize(){confettiCanvas.width=innerWidth; confettiCanvas.height=innerHeight;} addEventListener('resize',resize); resize();
+    function spawn(n=80){const cols=['#ff5c9e','#ffd166','#fff1f5','#ffe8cc','#ffd6e8']; for(let i=0;i<n;i++){pieces.push({x:Math.random()*confettiCanvas.width,y:-20+Math.random()*-200,w:6+Math.random()*12,h:6+Math.random()*6,rot:Math.random()*360,vr:Math.random()*8,c:cols[Math.floor(Math.random()*cols.length)],vx:(Math.random()-0.5)*4,vy:2+Math.random()*6})}}
+    let raf=null; function loop(){ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); for(let i=pieces.length-1;i>=0;i--){const p=pieces[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.rot+=p.vr; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180); ctx.fillStyle=p.c; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore(); if(p.y>confettiCanvas.height+50) pieces.splice(i,1) } if(pieces.length>0) raf=requestAnimationFrame(loop); else{cancelAnimationFrame(raf); raf=null}};
+    function runConfetti(n=120){spawn(n); if(!raf) loop();}
+    document.getElementById('celebrateBtn').addEventListener('click', ()=>{runConfetti(160); playAudio();});
+
+    // audio
+    const audio = document.getElementById('bgAudio'); document.getElementById('playMusic').addEventListener('click', ()=>{if(!audio.src){alert('No audio configured. To add music, set `audioSrc` variable in the page.');return;} if(audio.paused){audio.play(); document.getElementById('playMusic').textContent='⏸ Pause Music';}else{audio.pause(); document.getElementById('playMusic').textContent='▶ Play Music'}})
+    function playAudio(){ if(audio.src){ audio.play().catch(()=>{/* autoplay blocked */}); }}
+
+    // small accessibility/focus
+    setTimeout(()=>{document.getElementById('wishText').focus()},1200);
+
+    // GitHub Pages friendly: nothing server-side required — just upload this file as index.html
+    // Optional: automatically show intro for 2s then hide
+    setTimeout(()=>{ /* keep intro until user clicks */ },2000);
+  </script>
+</body>
+</html>
